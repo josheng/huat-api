@@ -3,7 +3,8 @@ require 'date'
 class Api::V1::ResultsController < ApplicationController
   def fourdresult
     # return specific result based on date if params is provided
-    date = JSON.parse(params[:drawdate])
+    date = JSON.parse(params[:drawdate]) if params[:drawdate]
+    p "hey"
     if date
       parseddate = Date.parse(date).strftime('%d %b %Y')
       render json: Fourd.find_by(drawdate: parseddate)
