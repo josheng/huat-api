@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  drawnumber: 1
+  drawdate: 2022-12-19
+  first: 1
+  second: 1
+  third: 1
+  starter: 1
+  consolation: 1
+
+two:
+  drawnumber: 1
+  drawdate: 2022-12-19
+  first: 1
+  second: 1
+  third: 1
+  starter: 1
+  consolation: 1
