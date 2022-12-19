@@ -13,3 +13,5 @@ class CreateFourds < ActiveRecord::Migration[7.0]
     end
   end
 end
+
+# rails g model Fourd drawnumber:integer drawdate:date first:integer second:integer third:integer starter:integer consolation:integer
