@@ -1,15 +1,25 @@
 require 'date'
 
 class Api::V1::ResultsController < ApplicationController
-  def fourdresult
-    # return specific result based on date if params is provided
-    date = JSON.parse(params[:drawdate]) if params[:drawdate]
-    p "hey"
-    if date
-      parseddate = Date.parse(date).strftime('%d %b %Y')
-      render json: Fourd.find_by(drawdate: parseddate)
+  def fourdlatestresult
+    # return latest result
+    render json: Fourd.first
+  end
+
+  def fourddatedresult
+    # return specific result based on date
+    date = JSON.parse(params[:drawdate].to_json)
+    parseddate = Date.parse(date).strftime('%d %b %Y')
+    result = Fourd.find_by(drawdate: parseddate)
+    if result
+      render json: result
     else
-      render json: Fourd.all
+      render json: { message: 'no result found!' }
     end
+  end
+
+  def fourdgetdate
+    # return all the dates of the draws
+    render json: Fourd.pluck(:drawdate)
   end
 end
