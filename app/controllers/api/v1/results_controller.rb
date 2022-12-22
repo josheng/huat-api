@@ -30,18 +30,34 @@ class Api::V1::ResultsController < ApplicationController
   def checkresult(number, bet, result)
     matched = []
     total = 0
-    number.each do |num|
-      matched << "first: #{num}, winning: #{calcwinningbet(bet)}" if result['first'] == num
-      matched << "second: #{num}, winning: #{calcwinningbet(bet)}" if result['second'] == num
-      matched << "third: #{num}, winning: #{calcwinningbet(bet)}" if result['third'] == num
-      matched << "starter: #{num}, winning: #{calcwinningbet(bet)}" if result['starter'].include?(num)
-      matched << "consolation: #{num}, winning: #{calcwinningbet(bet)}" if result['consolation'].include?(num)
+    number.each_with_index do |num, ind|
+      matched << "first: #{num}, winning: #{calcwinningbet(bet[ind], 'first')}" if result['first'] == num
+      matched << "second: #{num}, winning: #{calcwinningbet(bet[ind], 'second')}" if result['second'] == num
+      matched << "third: #{num}, winning: #{calcwinningbet(bet[ind], 'third')}" if result['third'] == num
+      matched << "starter: #{num}, winning: #{calcwinningbet(bet[ind], 'starter')}" if result['starter'].include?(num)
+      matched << "consolation: #{num}, winning: #{calcwinningbet(bet[ind], 'consolation')}" if result['consolation'].include?(num)
     end
     { winningnumber: matched, totalwinnings: total }
   end
 
-  def calcwinning(bet)
-    prize = { bigfirst: 2000, smallfirst: 3000, bigsecond: 1000, smallsecond: 2000, bigthird: 490, smallthird: 800, bigstarter: 250, bigconsolation: 60}
+  def calcwinningbet(bet, category)
+    total = 0
+    prize = { big1: 2000, small1: 3000, big2: 1000, small2: 2000, big3: 490, small3: 800, bigs: 250, bigc: 60 }
     # calculate here
+    case category
+    when 'first'
+      total = (bet['b'] * prize[:big1]) + (bet['s'] * prize[:small1])
+    when 'second'
+      total = (bet['b'] * prize[:big2]) + (bet['s'] * prize[:small2])
+    when 'third'
+      total = (bet['b'] * prize[:big3]) + (bet['s'] * prize[:small3])
+    when 'starter'
+      total = bet['b'] * prize[:bigs]
+    when 'consolation'
+      p 'look here'
+      p bet['b']
+      total = bet['b'] * prize[:bigc]
+    end
+    total
   end
 end
