@@ -38,7 +38,7 @@ class Api::V1::ResultsController < ApplicationController
       matched << "consolation: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'consolation')}" if result['consolation'].include?(num)
       total += prize if prize
     end
-    matched = "no winning number" if matched.empty?
+    matched = 'no winning number' if matched.empty?
     { winningnumber: matched, totalwinnings: total }
   end
 
