@@ -31,12 +31,14 @@ class Api::V1::ResultsController < ApplicationController
     matched = []
     total = 0
     number.each_with_index do |num, ind|
-      matched << "first: #{num}, winning: #{calcwinningbet(bet[ind], 'first')}" if result['first'] == num
-      matched << "second: #{num}, winning: #{calcwinningbet(bet[ind], 'second')}" if result['second'] == num
-      matched << "third: #{num}, winning: #{calcwinningbet(bet[ind], 'third')}" if result['third'] == num
-      matched << "starter: #{num}, winning: #{calcwinningbet(bet[ind], 'starter')}" if result['starter'].include?(num)
-      matched << "consolation: #{num}, winning: #{calcwinningbet(bet[ind], 'consolation')}" if result['consolation'].include?(num)
+      matched << "first: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'first')}" if result['first'] == num
+      matched << "second: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'second')}" if result['second'] == num
+      matched << "third: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'third')}" if result['third'] == num
+      matched << "starter: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'starter')}" if result['starter'].include?(num)
+      matched << "consolation: #{num}, prize: #{prize = calcwinningbet(bet[ind], 'consolation')}" if result['consolation'].include?(num)
+      total += prize if prize
     end
+    matched = "no winning number" if matched.empty?
     { winningnumber: matched, totalwinnings: total }
   end
 
@@ -54,8 +56,6 @@ class Api::V1::ResultsController < ApplicationController
     when 'starter'
       total = bet['b'] * prize[:bigs]
     when 'consolation'
-      p 'look here'
-      p bet['b']
       total = bet['b'] * prize[:bigc]
     end
     total
