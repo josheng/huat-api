@@ -1,24 +1,31 @@
-# README
+# HUAT API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Rails API was created to do the following:
 
-Things you may want to cover:
+* Scrap 4D Results and seed the data
+* GET request to return latest result
+* GET request to return date of all draws for the past two years
+* POST request to check winning number and your prize winnings.
 
-* Ruby version
+## Set Up
 
-* System dependencies
+You will require the following to run this locally:
 
-* Configuration
+* Ruby 3.1.2
+* Rails 7.0.4
+* PostgreSQL 14.6
+* Selenium chromedriver
 
-* Database creation
+Clone this git repo and run the following:
 
-* Database initialization
+> bundle install
+> rails db:create db:migrate db:seed
+> rails s
 
-* How to run the test suite
+The above command will do the following:
 
-* Services (job queues, cache servers, search engines, etc.)
+1. Install all required Gem
+2. Create DB, Perform DB Migration and seed data.
+3. Start rails server
 
-* Deployment instructions
-
-* ...
+## API
